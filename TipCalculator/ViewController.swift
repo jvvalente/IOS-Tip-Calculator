@@ -16,9 +16,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var billField: UITextField!
+    @IBOutlet weak var numberPoepleField: UITextField!
     @IBOutlet weak var tipControl: UISegmentedControl!
     @IBOutlet weak var tipSlider: UISlider!
-    @IBOutlet weak var percentageField: UITextField!
+    @IBOutlet weak var percentageLabel: UILabel!
     
     var tipPercentage = 0.15
     let tipPercentages = [0.15, 0.18, 0.2]
@@ -41,8 +42,8 @@ class ViewController: UIViewController {
     
     @IBAction func tipValueChanged(_ sender: UISlider) {
         //Updates the slider
-        percentageField.text = String(format: "%.0f",tipSlider.value * 100)
-        percentageField.text?.append("%")
+        percentageLabel.text = String(format: "%.0f",tipSlider.value * 100)
+        percentageLabel.text?.append("%")
         tipPercentage = Double(tipSlider.value)
         
         //Has to recalculate every time slider changes
@@ -54,24 +55,28 @@ class ViewController: UIViewController {
         //When tip control is changed it will update everything
         tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         tipSlider.setValue(Float(tipPercentages[tipControl.selectedSegmentIndex]), animated: true)
-        percentageField.text = String(tipPercentages[tipControl.selectedSegmentIndex] * 100)
-        percentageField.text?.append("%")
+        percentageLabel.text = String(Int(tipPercentages[tipControl.selectedSegmentIndex] * 100))
+        percentageLabel.text?.append("%")
         calculateTip(2)
         
     }
     
     @IBAction func calculateTip(_ sender: Any) {
         
-        //Get bill $
+        //Get bill $ & numbr of people
         let bill = Double(billField.text!) ?? 0
-            
+        var people = Int(numberPoepleField.text!) ?? 0
+        
+        if people <= 0 {people = 1}
+        
         //Clculate tip and total
         let tip = bill * tipPercentage
-        let total = bill + tip
+        let total = (bill + tip)/Double(people)
         
         //Update tip and total
         tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
+        if people == 1{ totalLabel.text = String(format: "$%.2f", total) }
+        else{ totalLabel.text = String(format: "$%.2f / person", total)}
         
     }
 }
