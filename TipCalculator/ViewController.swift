@@ -6,6 +6,9 @@
 //  Copyright © 2020 Joao. All rights reserved.
 //
 
+//TODO: On settings page create round up or round down option
+//TODO: Add # of people to divide evenly
+
 import UIKit
 
 class ViewController: UIViewController {
@@ -14,6 +17,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var billField: UITextField!
     @IBOutlet weak var tipControl: UISegmentedControl!
+    @IBOutlet weak var tipSlider: UISlider!
+    @IBOutlet weak var percentageField: UITextField!
+    
+    var tipPercentage = 0.15
+    let tipPercentages = [0.15, 0.18, 0.2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,20 +39,40 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
+    @IBAction func tipValueChanged(_ sender: UISlider) {
+        //Updates the slider
+        percentageField.text = String(format: "%.0f",tipSlider.value * 100)
+        percentageField.text?.append("%")
+        tipPercentage = Double(tipSlider.value)
+        
+        //Has to recalculate every time slider changes
+        calculateTip(1)
+    }
+    
+    @IBAction func onControlChanged(_ sender: Any) {
+        
+        //When tip control is changed it will update everything
+        tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        tipSlider.setValue(Float(tipPercentages[tipControl.selectedSegmentIndex]), animated: true)
+        percentageField.text = String(tipPercentages[tipControl.selectedSegmentIndex] * 100)
+        percentageField.text?.append("%")
+        calculateTip(2)
+        
+    }
+    
     @IBAction func calculateTip(_ sender: Any) {
         
         //Get bill $
         let bill = Double(billField.text!) ?? 0
             
         //Clculate tip and total
-        let tipPercentages = [0.15, 0.18, 0.2]
-        
-        let tip = bill * tipPercentages[tipControl.selectedSegmentIndex]
+        let tip = bill * tipPercentage
         let total = bill + tip
         
         //Update tip and total
         tipLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "$%.2f", total)
+        
     }
 }
 
