@@ -128,7 +128,18 @@
                             <outletCollection property="gestureRecognizers" destination="04z-4N-Qrz" appends="YES" id="XdH-l7-qFd"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Tip Calculator" id="Pnj-1J-exe"/>
+                    <navigationItem key="navigationItem" title="Tip Calculator" id="Pnj-1J-exe">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="E8r-Pb-hM9">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="caG-MB-lqR">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Settings"/>
+                                <connections>
+                                    <segue destination="ASv-qB-7GE" kind="push" id="7gB-eT-Wih"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="billField" destination="HfT-9w-nU8" id="Efn-2K-4bZ"/>
                         <outlet property="numberPoepleField" destination="AVE-HG-MlW" id="PgB-ue-QEa"/>
@@ -148,6 +159,53 @@
             </objects>
             <point key="canvasLocation" x="840.79999999999995" y="118.29085457271366"/>
         </scene>
+        <!--Settings Controller-->
+        <scene sceneID="yJu-E1-8lb">
+            <objects>
+                <viewController id="ASv-qB-7GE" customClass="SettingsController" customModule="TipCalculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mOU-qB-6Jt" customClass="Settings">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Default tip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MdO-ap-XHW">
+                                <rect key="frame" x="125" y="211" width="128" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8zS-xP-Pi1">
+                                <rect key="frame" x="125" y="264" width="128" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                <connections>
+                                    <action selector="saveDefault:" destination="ASv-qB-7GE" eventType="editingDidEnd" id="JBO-G9-lbv"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <viewLayoutGuide key="safeArea" id="SS9-pP-cvn"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="rwY-YQ-i9p" appends="YES" id="BT7-Xl-cZN"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="XSd-Nt-Mib"/>
+                    <connections>
+                        <outlet property="tipField" destination="8zS-xP-Pi1" id="hIE-AX-10x"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="skJ-Xv-2U4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="rwY-YQ-i9p">
+                    <connections>
+                        <action selector="onTap:" destination="ASv-qB-7GE" id="LGx-2j-yNn"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1626.4000000000001" y="121.88905547226388"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="oQo-oD-H98">
             <objects>
@@ -160,6 +218,7 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="3x6-WR-5og"/>
+                        <segue destination="ASv-qB-7GE" kind="push" id="nNa-dw-XxX"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y68-eK-EvZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -167,4 +226,7 @@
             <point key="canvasLocation" x="-98.400000000000006" y="118.29085457271366"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="nNa-dw-XxX"/>
+    </inferredMetricsTieBreakers>
 </document>

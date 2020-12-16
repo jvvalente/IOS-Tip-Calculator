@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF5AE1AA258994190073FBDC /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5AE1A9258994190073FBDC /* SettingsController.swift */; };
 		CFAE9EE02586B31E00A7BCC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAE9EDF2586B31E00A7BCC8 /* AppDelegate.swift */; };
 		CFAE9EE22586B31E00A7BCC8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAE9EE12586B31E00A7BCC8 /* ViewController.swift */; };
 		CFAE9EE52586B31E00A7BCC8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFAE9EE32586B31E00A7BCC8 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CF5AE1A9258994190073FBDC /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		CFAE9EDC2586B31E00A7BCC8 /* TipCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFAE9EDF2586B31E00A7BCC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFAE9EE12586B31E00A7BCC8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		CFAE9ED32586B31E00A7BCC8 = {
 			isa = PBXGroup;
 			children = (
+				CF5AE1A9258994190073FBDC /* SettingsController.swift */,
 				CFAE9EDE2586B31E00A7BCC8 /* TipCalculator */,
 				CFAE9EF32586B32100A7BCC8 /* TipCalculatorTests */,
 				CFAE9EFE2586B32100A7BCC8 /* TipCalculatorUITests */,
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF5AE1AA258994190073FBDC /* SettingsController.swift in Sources */,
 				CFAE9EE22586B31E00A7BCC8 /* ViewController.swift in Sources */,
 				CFAE9EE02586B31E00A7BCC8 /* AppDelegate.swift in Sources */,
 			);

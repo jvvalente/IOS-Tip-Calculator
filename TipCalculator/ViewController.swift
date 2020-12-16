@@ -21,12 +21,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipSlider: UISlider!
     @IBOutlet weak var percentageLabel: UILabel!
     
+    let defaults = UserDefaults.standard
+    
     var tipPercentage = 0.15
     let tipPercentages = [0.15, 0.18, 0.2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //This is the setup from the default tip that has to be updated
+        tipPercentage = (defaults.double(forKey: "tipDefault"))/100
+        tipSlider.setValue(Float(tipPercentage), animated: true)
+        percentageLabel.text = String(Int(tipPercentage * 100))
+        percentageLabel.text?.append("%")
+        if tipPercentage == 0.15 {tipControl.selectedSegmentIndex = 0}
+        else if tipPercentage == 0.18 {tipControl.selectedSegmentIndex = 1}
+        else if tipPercentage == 0.20 {tipControl.selectedSegmentIndex = 2}
+        calculateTip(5)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +80,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func calculateTip(_ sender: Any) {
+    
+        print(defaults.double(forKey: "tipDefault"))
+        print("Hello2")
         
         //Get bill $ & numbr of people
         let bill = Double(billField.text!) ?? 0
