@@ -7,12 +7,12 @@
 //
 
 //TODO: On settings page create round up or round down option
-//TODO: Add # of people to divide evenly
 
 import UIKit
 
 class ViewController: UIViewController {
 
+    //Outlets from Main.Storyboard
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var billField: UITextField!
@@ -20,15 +20,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipControl: UISegmentedControl!
     @IBOutlet weak var tipSlider: UISlider!
     @IBOutlet weak var percentageLabel: UILabel!
+    @IBOutlet weak var peopleStepper: UIStepper!
     
+    //Defaults used to get all the default info from settings
     let defaults = UserDefaults.standard
     
+    //Variables for default tip % and control numbers
     var tipPercentage = 0.15
     let tipPercentages = [0.15, 0.18, 0.2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //prompts user to type on bill field as soon as it opens
+        self.billField.becomeFirstResponder()
     
     }
     
@@ -52,9 +58,8 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
     @IBAction func onTap(_ sender: Any) {
-        print("Hello")
-        
         view.endEditing(true)
     }
     
@@ -79,25 +84,42 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func calculateTip(_ sender: Any) {
+    @IBAction func onStepper(_ sender: Any) {
+        //Updates text field if ++ or -- [1 to 20]
+        numberPoepleField.text = String(Int(peopleStepper.value))
+        calculateTip(6)
+    }
     
-        print(defaults.double(forKey: "tipDefault"))
-        print("Hello2")
+    @IBAction func calculateTip(_ sender: Any) {
+        
+        //Sets up formatter for currency
+        let formatter = NumberFormatter()
+        let localeCode : String = defaults.string(forKey: "localeCode")!
         
         //Get bill $ & numbr of people
-        let bill = Double(billField.text!) ?? 0
+        
+        var bill = Double(billField.text!) ?? 0
         var people = Int(numberPoepleField.text!) ?? 0
         
-        if people <= 0 {people = 1}
+        //Makes sure bill & people are within boundaries
+        if bill < 0 {bill = 0; billField.text = String(bill)}
+        if people <= 0 {people = 1; numberPoepleField.text = String(people)}
         
         //Clculate tip and total
-        let tip = bill * tipPercentage
-        let total = (bill + tip)/Double(people)
+        let tip = bill * tipPercentage as NSNumber
+        let total = ((bill + (bill * tipPercentage))/Double(people)) as NSNumber
+        
+        //Creates new formatter and sets it to currency mode
+        //TODO: Add default currency in settings page
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: localeCode)
         
         //Update tip and total
-        tipLabel.text = String(format: "$%.2f", tip)
-        if people == 1{ totalLabel.text = String(format: "$%.2f", total) }
-        else{ totalLabel.text = String(format: "$%.2f / person", total)}
+        tipLabel.text = formatter.string(from: tip)
+        if people == 1{ totalLabel.text = formatter.string(from: total)}
+        else{totalLabel.text = formatter.string(from: total)
+            totalLabel.text?.append(" / per person")
+        }
         
     }
 }
