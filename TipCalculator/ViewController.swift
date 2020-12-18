@@ -9,6 +9,7 @@
 //TODO: On settings page create round up or round down option
 
 import UIKit
+import QuartzCore
 
 class ViewController: UIViewController {
 
@@ -21,6 +22,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipSlider: UISlider!
     @IBOutlet weak var percentageLabel: UILabel!
     @IBOutlet weak var peopleStepper: UIStepper!
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var middleView: UIView!
+    @IBOutlet weak var perPerson: UILabel!
     
     //Defaults used to get all the default info from settings
     let defaults = UserDefaults.standard
@@ -35,12 +40,23 @@ class ViewController: UIViewController {
         
         //prompts user to type on bill field as soon as it opens
         self.billField.becomeFirstResponder()
+        
+        //Rounding corners of views
+        topView.layer.cornerRadius = 10; middleView.layer.cornerRadius = 10
+        topView.layer.masksToBounds = true; middleView.layer.masksToBounds = true
+        
+        //navigationController?.navigationBar.barTintColor = UIColor(red: 0.004, green: 0.043, blue: 0.447, alpha: 1.0)
+        
+        navigationController?.navigationBar.barTintColor = UIColor.white
+        
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
     
+        //navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         //This is the setup from the default tip that has to be updated
         tipPercentage = (defaults.double(forKey: "tipDefault"))/100
         tipSlider.setValue(Float(tipPercentage), animated: true)
@@ -59,9 +75,7 @@ class ViewController: UIViewController {
     }
 
     
-    @IBAction func onTap(_ sender: Any) {
-        view.endEditing(true)
-    }
+    @IBAction func onTap(_ sender: Any) { view.endEditing(true) }
     
     @IBAction func tipValueChanged(_ sender: UISlider) {
         //Updates the slider
@@ -107,7 +121,8 @@ class ViewController: UIViewController {
         
         //Clculate tip and total
         let tip = bill * tipPercentage as NSNumber
-        let total = ((bill + (bill * tipPercentage))/Double(people)) as NSNumber
+        let total = ((bill + (bill * tipPercentage))) as NSNumber
+        let perPersonTotal = ((bill + (bill * tipPercentage))/Double(people)) as NSNumber
         
         //Creates new formatter and sets it to currency mode
         //TODO: Add default currency in settings page
@@ -116,10 +131,8 @@ class ViewController: UIViewController {
         
         //Update tip and total
         tipLabel.text = formatter.string(from: tip)
-        if people == 1{ totalLabel.text = formatter.string(from: total)}
-        else{totalLabel.text = formatter.string(from: total)
-            totalLabel.text?.append(" / per person")
-        }
+        totalLabel.text = formatter.string(from: total)
+        perPerson.text = formatter.string(from: perPersonTotal)
         
     }
 }
